@@ -1,5 +1,18 @@
 import models from "../db/models";
 const {User} = models;
+import hashPassword from './encryptionService';
+import ValidationError from './errorService';
+
+const createUser = async (details) => {
+    const message = await isInputValid(details);
+
+    if (message != undefined) {
+      throw new ValidationError(message);
+    }
+  
+    details.password = await hashPassword(details.password);
+    return User.create(details);
+  };
 
 const isInputValid = async (details) => {
     if (!isUsernameValid(details.username)) {
@@ -57,3 +70,13 @@ const isInputValid = async (details) => {
     }
     return true;
   };
+
+  export default {
+    createUser,
+  
+  };
+  export {
+        isUsernameValid, 
+        isPasswordValid, 
+        isEmailValid, 
+        isEmailAlreadyInUse};
