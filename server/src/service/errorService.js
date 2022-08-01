@@ -1,7 +1,7 @@
 class ValidationError extends Error {
-    constructor(message) {
-      super(message);
-    }
+  constructor(message) {
+    super(message);
   }
-  
-  export default ValidationError;
+}
+
+export default ValidationError;
