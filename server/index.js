@@ -1,23 +1,11 @@
-const express = require("express");
+import express from "express";
+import { api } from "./src/routes/index.js";
+import cors from "cors";
+
 const app = express();
-const { User } = require("./src/db/models");
-const cors = require("cors");
 
 app.use(cors());
-app.use(express.json());
-
-app.post("/register", async (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-
-  try {
-    const user = await User.create({ username, password });
-    return res.json(user);
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
-  }
-});
+app.use("/api", api);
 
 app.listen(3001, () => {
   console.log("Server is up and running");
