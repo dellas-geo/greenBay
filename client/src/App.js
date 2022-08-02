@@ -5,14 +5,42 @@ import Axios from "axios";
 function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  
   const addUser = () => {
     Axios.post("http://localhost:3001/api/register", {
       username: username,
       password: password,
     }).then(() => {
       console.log("Success");
-    });
+    }).catch( (err) => console.log(err));
+    
+    // fetch("http://localhost:3001/api/register", {
+      //   method: "post",
+      //   body: JSON.stringify({
+        //     username: username,
+    //     password: password,
+    //   }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "Accept": "application/json",
+    //   },
+    // })
+    //   .then(async (response) => {
+    //     if (response.status === 200) {
+    //       return response.json();
+    //     } else if (response.status === 500) {
+    //       throw new Error("Server error");
+    //     } else {
+    //       console.log("Photo upload was not successful!");
+    //     }
+    //   })
+    //   .then((result) => {
+    //     console.log("Photo upload was successful!");
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
   };
 
   return (
