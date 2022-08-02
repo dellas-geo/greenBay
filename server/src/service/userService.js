@@ -1,7 +1,7 @@
-import models from "../db/models";
+import models from "../db/models/user.js";
 const { User } = models;
-import hashPassword from "./encryptionService";
-import ValidationError from "./errorService";
+import hashPassword from "./encryptionService.js";
+import ValidationError from "./errorService.js";
 
 const createUser = async (details) => {
   const message = await isInputValid(details);
@@ -11,6 +11,7 @@ const createUser = async (details) => {
   }
 
   details.password = await hashPassword(details.password);
+  console.log(details);
   return User.create(details);
 };
 
@@ -19,10 +20,11 @@ const isInputValid = async (details) => {
     return "Invalid username";
   } else if (!isPasswordValid(details.password)) {
     return "Invalid password";
-  } else if (!isEmailValid(details.email)) {
-    return "Invalid email";
-  } else if (await isEmailAlreadyInUse(details.email)) {
-    return "We already have this email";
+    // } else if (!isEmailValid(details.email)) {
+    //   return "Invalid email";
+    // } else if (await isEmailAlreadyInUse(details.email)) {
+    //   return "We already have this email";
+    // }
   }
 };
 
