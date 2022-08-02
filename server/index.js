@@ -2,6 +2,7 @@ import express from "express";
 import { api } from "./src/routes/index.js";
 import cors from "cors";
 import db from "./src/db/models/index.js";
+// import Sequelize from "sequelize";
 
 const app = express();
 
@@ -14,3 +15,19 @@ db.sequelize.sync().then((req) => {
   });
 });
 
+
+
+// Test connection Sequelize/DB
+
+// var sequelize = new Sequelize("greenbay", "root", "password", {
+//   host: "127.0.0.1",
+//   dialect: "mysql",
+// });
+
+// sequelize.authenticate().then(function (errors) {
+//   console.log(errors);
+// });
+
+// sequelize.query("SELECT * FROM Users").then(function (result) {
+//   console.log(result);
+// });
