@@ -7,7 +7,7 @@ function App() {
   const [password, setPassword] = useState("");
 
   const addUser = () => {
-    Axios.post("http://localhost:3001/register", {
+    Axios.post("http://localhost:3001/api/register", {
       username: username,
       password: password,
     }).then(() => {
