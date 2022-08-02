@@ -2,6 +2,12 @@ import models from "../db/models/user.js";
 const { User } = models;
 import hashPassword from "./encryptionService.js";
 import ValidationError from "./errorService.js";
+import Sequelize from "sequelize";
+
+const sequelize = new Sequelize("greenbay", "root", "password", {
+  host: "127.0.0.1",
+  dialect: "mysql",
+});
 
 const createUser = async (details) => {
   const message = await isInputValid(details);
@@ -11,8 +17,17 @@ const createUser = async (details) => {
   }
 
   details.password = await hashPassword(details.password);
-  console.log(details);
-  return User.create(details);
+
+  sequelize
+    .query(
+      `INSERT INTO Users (username, password, createdAt, updatedAt) 
+      VALUES ("${details.username}", "${details.password}","2022-08-01 22:26:38","2022-08-01 22:26:38")`
+    )
+    .then(function (result) {
+      console.log(result);
+    });
+
+  // return User.create(details);
 };
 
 const isInputValid = async (details) => {
