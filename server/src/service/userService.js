@@ -4,6 +4,8 @@ import hashPassword from "./encryptionService.js";
 import ValidationError from "./errorService.js";
 import Sequelize from "sequelize";
 
+const currentdate = new Date(); 
+
 const sequelize = new Sequelize("greenbay", "root", "password", {
   host: "127.0.0.1",
   dialect: "mysql",
@@ -21,13 +23,12 @@ const createUser = async (details) => {
   sequelize
     .query(
       `INSERT INTO Users (username, password, createdAt, updatedAt) 
-      VALUES ("${details.username}", "${details.password}","2022-08-01 22:26:38","2022-08-01 22:26:38")`
+      VALUES ("${details.username}", "${details.password}","${datetime}","${datetime}")`
     )
     .then(function (result) {
       console.log(result);
     });
 
-  // return User.create(details);
 };
 
 const isInputValid = async (details) => {
@@ -45,7 +46,7 @@ const isInputValid = async (details) => {
 
 const isUsernameValid = (username) => {
   const format = /[ `!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
-
+  
   if (username.length < 4 || format.test(username)) {
     return false;
   }
@@ -62,8 +63,8 @@ const isPasswordValid = (password) => {
     !/\d/.test(password) ||
     format.test(last) ||
     /\d/.test(last)
-  ) {
-    return false;
+    ) {
+      return false;
   }
 
   return true;
@@ -87,6 +88,14 @@ const isEmailAlreadyInUse = async (mail) => {
   }
   return true;
 };
+
+const datetime =   currentdate.getFullYear() + "-"
+                + (currentdate.getMonth()+1)  + "-" 
+                + currentdate.getDate() + " "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+
 
 export default {
   createUser,
