@@ -8,14 +8,13 @@ const app = express();
 
 app.use(cors());
 app.use("/api", api);
+app.use(express.json());
 
 db.sequelize.sync().then((req) => {
   app.listen(3001, () => {
     console.log("Server is up and running");
   });
 });
-
-
 
 // Test connection Sequelize/DB
 
